@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import SignIn from "./components/pages/signIn/signIn.jsx"
 import SignUp from "./components/pages/signUp/signUp.jsx"
 import HomePage from "./components/pages/homePage/homePage.jsx"
+import FavoritesPage from "./components/pages/favoritesPage/favoritesPage.jsx"
 
 import "./index.sass"
 
@@ -16,6 +17,7 @@ ReactDOM.render(
                     <Route path="/signup" component={SignUp} />
                     <Route path="/signin" component={SignIn} />
                     <Route path="/home" component={HomePage} />
+                    <Route path="/favorites" component={FavoritesPage} />
                 </Switch>
             </Router>
         </React.Fragment>

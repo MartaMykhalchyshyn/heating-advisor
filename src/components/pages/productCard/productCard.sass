@@ -1,3 +1,37 @@
+.front
+    background-color: $light-blue
+
+.back
+    background-color: $green
+    text-align: center
+
+    &-product-name
+        font-weight: bold
+        
 .product-card
-    background-color: grey
     margin: 20px
+    width: 280px
+    height: 140px
+    padding: 20px
+    justify-content: center
+    border-radius: 15px
+    font-size: 25px
+
+
+    &:hover
+        cursor: pointer
+
+    &-name, &-category
+        text-align: center
+
+    &-category
+        font-size: 18px
+
+    &-data
+        display: flex
+        flex-direction: row
+        justify-content: space-around
+        padding: 0 30px
+
+        &-item
+            font-size: 18px

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link, useHistory } from 'react-router-dom'
 import { Input, Button } from 'antd'
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import axios from "axios"
+import http from "@utils/http"
 
 import "./signIn.sass"
 
@@ -13,26 +13,12 @@ const SignIn = () => {
 
     const [message, setMessage] = useState("")
     const history = useHistory()
-    
-
-    const post = (email, password) => {
-        const url = 'https://calories-tracker-api-server.herokuapp.com/api/v1/auth/signin/'
-        const body = {'email': email, 'password': password}
-
-        const headers =  {
-            "Content-Type": "application/json",
-            "Content-Lenght": 1111,
-            "Host": "asfqwefqwe",
-            "Access-Control-Allow-Origin": '*',
-        }
-        return axios.post(url, body, { headers })
-    }
 
     const signIn = (email, password) => {
         console.log('email', email)
         console.log('password', password)
 
-        post(email, password)
+        http.post('/auth/signin/', {'email': email, 'password': password })
             .then(response => {
                 response.status == 200 && setMessage(response.data.message) 
                 history.push('/home')
@@ -43,7 +29,6 @@ const SignIn = () => {
                 window.localStorage.setItem('refresh_access_token_exp', response.data.data.refresh_access_token_exp)
             })
             .catch(error => {
-                console.log(error.response)
                 console.log(error.response.data.message)
                 setMessage(error.response.data.message)
             })      
