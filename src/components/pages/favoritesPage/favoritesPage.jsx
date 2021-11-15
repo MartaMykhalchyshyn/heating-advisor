@@ -83,7 +83,7 @@ const favoritesPage = () => {
 
     const logout = () => {
         localStorage.clear()
-        window.location.href = '/signin'
+        window.location.href = '/'
     }
 
     return (
