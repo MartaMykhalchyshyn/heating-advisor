@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom"
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
 import SignIn from "./components/pages/signIn/signIn.jsx"
 import SignUp from "./components/pages/signUp/signUp.jsx"
@@ -14,6 +14,7 @@ ReactDOM.render(
         <React.Fragment>
             <Router>
                 <Switch>
+                    <Redirect exact from='/' to='/signin' />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/" component={SignIn} />
                     <Route path="/home" component={HomePage} />
