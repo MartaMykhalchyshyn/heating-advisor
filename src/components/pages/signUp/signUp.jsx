@@ -58,7 +58,7 @@ const SignUp = () => {
                 <Button disabled={isValid} onClick={() => signUp(email, password)}  type="primary" shape="round"size={'large'}>Sign up</Button>
                 {message}
                 <div>Already have an account? 
-                    <Link to="/signin">Sign in</Link>
+                    <Link to="/">Sign in</Link>
                 </div>
             </div>
         </div>
