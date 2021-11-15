@@ -1,34 +1,22 @@
 import React, { useState, useEffect } from "react"
-import { Link } from 'react-router-dom'
-import { Input, Button } from 'antd'
 import ProductCard from '@components/pages/productCard/productCard'
-import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import axios from "axios"
-import request from "@utils/request"
+import Navigation from '@components/pages/navigation/navigation'
+import Search from '@components/pages/search/search'
+import http from "@utils/http"
 
 import "./homePage.sass"
 
 
 const HomePage = () => {
     const [allProducts, setAllProducts] = useState([])
+    
 
     useEffect(() => {
         getProducts()
     }, [])
 
-    const get = () => {
-        const url = 'https://calories-tracker-api-server.herokuapp.com/api/v1/products'
-
-        const headers =  {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*',
-            }
-        return axios.get(url)
-    }
-
-
     const getProducts = () => {
-        get()
+        http.get('/products')
         .then(response => {
             console.log(response.data.data)
             setAllProducts(response.data.data)
@@ -39,13 +27,19 @@ const HomePage = () => {
     }
 
     
+
+    
     return (
         <div className="home-page">
-            <div>You are on Home page</div>
-            <button onClick={getProducts}>random products</button> 
-            {allProducts.map(product => (
-                <ProductCard product={product}/>
-            ))}
+            <Navigation />
+            {/* <button onClick={getProducts}>random products</button>  */}
+            <Search />
+            
+            <div className="home-page-list">
+                {allProducts.map(product => (
+                    <ProductCard key={product.id} product={product} isSearchProduct={true}/>
+                ))}
+            </div>
         </div>
     )
 }

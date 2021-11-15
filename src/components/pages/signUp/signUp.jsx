@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link } from 'react-router-dom'
 import { Input, Button } from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import axios from "axios"
+import http from "@utils/http"
 
 import "./signUp.sass"
 
@@ -13,27 +13,13 @@ const SignUp = () => {
     const [repeatedPassword, setRepeatedPassword] = useState("")
     const [message, setMessage] = useState("")
     
-
-    const post = (email, password) => {
-        const url = 'https://calories-tracker-api-server.herokuapp.com/api/v1/auth/signup'
-        const body = {'email': email, 'password': password}
-
-        const headers =  {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*',
-            }
-        return axios.post(url, body, { headers })
-    }
-
     const isValid = password != repeatedPassword
-
-
 
     const signUp = (email, password) => {
         console.log('email', email)
         console.log('password', password)
 
-        post(email, password)
+        http.post('/auth/signup/', {'email': email, 'password': password })
             .then(response => {
                 response.status == 201 && setMessage(response.data.message)
                 console.log(response)
