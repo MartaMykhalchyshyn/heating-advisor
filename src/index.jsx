@@ -14,9 +14,9 @@ ReactDOM.render(
         <React.Fragment>
             <Router>
                 <Switch>
-                    <Redirect exact from='/' to='/signin' />
+                    <Redirect exact from="/" to="/signin" />
+                    <Route path="/signin" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
-                    <Route path="/" component={SignIn} />
                     <Route path="/home" component={HomePage} />
                     <Route path="/favorites" component={FavoritesPage} />
                 </Switch>
