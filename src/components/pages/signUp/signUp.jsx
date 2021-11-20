@@ -32,34 +32,50 @@ const SignUp = () => {
 
 
     return (
-        <div id="sign-up-page">
-            <div>Sign up</div>
-            <div>
+        <div className="sign-up-page">
+            <div className="sign-up-page-header">Sign up</div>
+            <div className="sign-up-page-label">E-mail</div>
             <Input 
-                    onChange={e => setEmail(e.target.value)}
-                    value={email}
-                    placeholder="enter e-mail" 
-                    prefix={<UserOutlined />}
+                onChange={e => setEmail(e.target.value)}
+                value={email}
+                placeholder="enter e-mail" 
+                prefix={<UserOutlined />}
+                className="sign-up-page-item"
+                style={{height: '50px', fontSize: '20px'}}
+            />
+            <div className="sign-up-page-label">Password</div>
+            <Input.Password
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+                placeholder="enter password"
+                prefix={<LockOutlined />}
+                className="sign-up-page-item"
+                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
+                style={{height: '50px', fontSize: '20px'}}
+            />
+            <div className="sign-up-page-label">Password</div>
+             <Input.Password
+                onChange={e => setRepeatedPassword(e.target.value)}
+                value={repeatedPassword}
+                placeholder="repeat password"
+                prefix={<LockOutlined />}
+                className="sign-up-page-item"
+                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
+                style={{height: '50px', fontSize: '20px'}}
                 />
-                <Input.Password
-                    onChange={e => setPassword(e.target.value)}
-                    value={password}
-                    placeholder="enter password"
-                    prefix={<LockOutlined />}
-                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
-                    />
-                <Input.Password
-                    onChange={e => setRepeatedPassword(e.target.value)}
-                    value={repeatedPassword}
-                    placeholder="repeat password"
-                    prefix={<LockOutlined />}
-                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
-                    />
-                <Button disabled={isValid} onClick={() => signUp(email, password)}  type="primary" shape="round"size={'large'}>Sign up</Button>
-                {message}
-                <div>Already have an account? 
-                    <Link to="/signin">Sign in</Link>
-                </div>
+            <Button 
+                onClick={() => signUp(email, password)} 
+                disabled={isValid}
+                type="primary" 
+                size={'large'}
+                style={{width: '350px', fontSize: '25px', height: '50px'}}
+                >
+                Sign up
+            </Button>
+            {message}
+            <div className="sign-up-page-line"></div>
+            <div className="sign-up-page-link">Already have an account? 
+                <Link to="/signin" style={{marginLeft: '10px'}}>Sign in</Link>
             </div>
         </div>
     )

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
-import { Link } from 'react-router-dom'
 import ProductCard from '@components/pages/productCard/productCard'
-import Navigation from '@components/pages/navigation/navigation'
+import Header from '@components/pages/header/header'
+import Chart from '@components/pages/chart/chart'
+import { Badge } from 'antd';
 import http from "@utils/http"
 import { DatePicker, Button } from 'antd'
 
@@ -16,9 +17,13 @@ const favoritesPage = () => {
     const [kilojoules, setKilojoules] = useState(0)
     const [selectedDate, setSelectedDate] = useState('')
     const [message, setMessage] = useState('')
+    const [eatenToday, setEatenToday] = useState(false)
+    const [eatenProducts, setEatenProducts] = useState(0)
+    const [chartData, setChartData] = useState([])
 
     useEffect(() => {
         getFavorites()
+        getDailyCalories()
     }, [])
 
     const getFavorites = () => {
@@ -43,19 +48,28 @@ const favoritesPage = () => {
         }) 
     }
 
-    const countCalories = (favorite) => {
+    const countCalories = (favorite, id) => {
         setCalories((prev) => prev + favorite.calories)
         setKilojoules((prev) => prev + favorite.kilojoules)
+        setEatenToday((prev) => !prev)
+        setEatenProducts(prev => prev + 1)
+       
     }    
+
+    const removeCalories = (favorite, id) => {
+        setCalories((prev) => prev - favorite.calories)
+        setKilojoules((prev) => prev - favorite.kilojoules)
+        setEatenToday((prev) => !prev)
+        setEatenProducts(prev => prev - 1)
+    } 
     
 
     const onChange = (date, dateString) => {
         setSelectedDate(() => dateString.replace(/-/g, '.'))
     }
 
-    const test = () => {
-        console.log(selectedDate)
-    }
+
+    
 
     const postDailyCalories = (data) => {
         http.post('/user/calories', data)
@@ -68,48 +82,62 @@ const favoritesPage = () => {
         }) 
     }
 
-    const getDailyCalories = (date) => {
-        http.get('/user/calories', {
-            start_date: date,
-            end_date: date,
-          })
+    const getDailyCalories = () => {
+        http.get('/user/calories')
         .then(response => {
             console.log(response)
+            setChartData(response.data.data.calories)
         })
         .catch(error => {
             console.log(error.response)
         }) 
     }
 
-    const logout = () => {
-        localStorage.clear()
-        window.location.href = '/'
-    }
+    // const getMonthCalories = () => {
+    //     let today = new Date();
+    //     let c = today.toISOString().split('T')[0]
+
+    //     let monthAgo = new Date();
+    //     monthAgo.setMonth(monthAgo.getMonth() - 1);
+    //     let b = monthAgo.toISOString().split('T')[0]
+    //     http.get('/user/calories', {
+    //         start_date: b,
+    //         end_date: c,
+    //       })
+    //     .then(response => {
+    //         console.log(response)
+    //         setChartData(response.data.data.calories)
+    //     })
+    //     .catch(error => {
+    //         console.log(error.response)
+    //     }) 
+    // }
 
     return (
         <div className="favorites-page" >
-            <div className="header"> 
-                <Navigation />
-                <button onClick={logout}>logout</button>
-            </div>
+                <Header />
             <div>
                 <DatePicker onChange={onChange} />
                 <Button disabled={!selectedDate} onClick={() => postDailyCalories({ 'calories': calories, 'kilojoules': kilojoules, 'date': selectedDate })}>Save calories</Button>
                 {message}
-                <Button disabled={!selectedDate} onClick={() => getDailyCalories(selectedDate)}>Get calories</Button>
+                <Button  onClick={() => getDailyCalories()}>Get calories</Button>
             </div>
             <div className="favorites-page-list">
                 {!favorites.length && <div>Your favorites list is empty</div>}
                 {favorites.map(favorite => (
-                    <div>
-                        <ProductCard key={favorite.id} product={favorite} countCalories={countCalories} />
+                    <div key={favorite.id}>
+                        <ProductCard  product={favorite} countCalories={countCalories} removeCalories={removeCalories} deleteFromFavorites={deleteFromFavorites} eatenToday={eatenToday}/>
                         {/* <Button onClick={() => countCalories(favorite)}>Count</Button> */}
-                        <Button onClick={() => deleteFromFavorites({ 'product_id': favorite.id })}>Delete</Button>
+                        {/* <Button onClick={() => deleteFromFavorites({ 'product_id': favorite.id })}>Delete</Button> */}
                     </div>
                 ))}
             </div>
+            <Badge count={eatenProducts} showZero>
+                <p style={{paddingRight: 10, fontSize: '20px'}}>Today products</p>
+            </Badge>
             <div>Today calories: {calories}</div>
             <div>Today kilojoules: {kilojoules}</div>
+            <Chart chartData={chartData} />
         </div>
     )
 }

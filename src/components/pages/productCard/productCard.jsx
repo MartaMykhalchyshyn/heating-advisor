@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import http from "@utils/http"
 import ReactCardFlip from 'react-card-flip'
+import { PlusOutlined, MinusOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import "./productCard.sass"
 
 
-const productCard = ({ product, isSearchProduct, countCalories }) => {
+const productCard = ({ product, isSearchProduct, countCalories, removeCalories, deleteFromFavorites, eatenToday }) => {
     const [isFlipped, setIsFlipped] = useState(false)
 
     const addToFavorites = (id) => {
@@ -18,7 +19,6 @@ const productCard = ({ product, isSearchProduct, countCalories }) => {
             console.log(error.response)
         }) 
     }
-  
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -48,13 +48,18 @@ const productCard = ({ product, isSearchProduct, countCalories }) => {
           </ReactCardFlip>
             :
             <div className="product-card front" onClick={handleClick}> 
+                {eatenToday ?
+                <MinusOutlined style={{ fontSize: '20px', position: 'absolute', right: 10, top: 10 }} onClick={() => removeCalories(product)} />
+                :
+                <PlusOutlined style={{ fontSize: '20px', position: 'absolute', right: 10, top: 10 }} onClick={() => countCalories(product, product.id)} />
+                }
                 <div className="product-card-name">{product.name}</div>
                 <div className="product-card-category">{product.category}</div>
                 <div className="product-card-data">
                     <div>{product.calories} <span className="product-card-data-item">kcal</span></div>
                     <div>{product.kilojoules} <span className="product-card-data-item">kJ</span></div>
                 </div>
-                <div onClick={() => countCalories(product)}>+</div>
+                <DeleteOutlined style={{ fontSize: '20px', position: 'absolute', right: 10, bottom: 10 }} onClick={() => deleteFromFavorites({ 'product_id': product.id })} />
             </div>
         }
         </div>
