@@ -23,6 +23,7 @@ const SignIn = () => {
                 response.status == 200 && setMessage(response.data.message) 
                 history.push('/home')
                 console.log(response.data.data.access_token)
+                window.localStorage.setItem('user-email', email)
                 window.localStorage.setItem('access_token', response.data.data.access_token)
                 window.localStorage.setItem('access_token_exp', response.data.data.access_token_exp)
                 window.localStorage.setItem('refresh_access_token', response.data.data.refresh_access_token)
@@ -34,28 +35,41 @@ const SignIn = () => {
             })      
     }
 
-
     return (
-        <div id="sign-in-page">
-            <div>Sign in</div>
-                <Input 
-                    onChange={e => setEmail(e.target.value)}
-                    value={email}
-                    placeholder="enter e-mail" 
-                    prefix={<UserOutlined />}
-                />
-                <Input.Password
-                    onChange={e => setPassword(e.target.value)}
-                    value={password}
-                    placeholder="enter password"
-                    prefix={<LockOutlined />}
-                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
-                />
-                <Button onClick={() => signIn(email, password)} type="primary" shape="round"size={'large'}>Sign in</Button>
-                {message}
-                <div>Don’t have an account?
-                    <Link to="/signup">Sign up</Link>
-                </div>
+        <div className="sign-in-page">
+            <div className="sign-in-page-header">Sign in</div>
+            <div className="sign-in-page-label">E-mail</div>
+            <Input 
+                onChange={e => setEmail(e.target.value)}
+                value={email}
+                placeholder="enter e-mail" 
+                prefix={<UserOutlined />}
+                className="sign-in-page-item"
+                style={{height: '50px', fontSize: '20px'}}
+            />
+            <div className="sign-in-page-label">Password</div>
+            <Input.Password
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+                placeholder="enter password"
+                prefix={<LockOutlined />}
+                className="sign-in-page-item"
+                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
+                style={{height: '50px', fontSize: '20px'}}
+            />
+            <Button 
+                onClick={() => signIn(email, password)} 
+                type="primary" 
+                size={'large'}
+                style={{width: '350px', fontSize: '25px', height: '50px'}}
+                >
+                Sign in
+            </Button>
+            {message}
+            <div className="sign-up-page-line"></div>
+            <div className="sign-in-page-link">Don’t have an account?
+                <Link to="/signup" style={{marginLeft: '10px'}}>Sign up</Link>
+            </div>
         </div>
     )
 }
