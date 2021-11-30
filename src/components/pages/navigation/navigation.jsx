@@ -5,7 +5,6 @@ import "./navigation.sass"
 
 const navigation = () => {
 
-
     return (
         <div className="navigation">
             <NavLink className="navigation-item" activeClassName="navigation-item-active" to='/home'>Home</NavLink>
