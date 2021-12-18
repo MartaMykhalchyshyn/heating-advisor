@@ -6,14 +6,14 @@ import { PlusOutlined, MinusOutlined, DeleteOutlined } from "@ant-design/icons"
 import "./productCard.sass"
 
 
-const productCard = ({ 
-        product, 
-        isSearchProduct, 
-        calories, 
-        countCalories, 
-        removeCalories, 
-        deleteFromFavorites
-    }) => {
+const productCard = ({
+    product,
+    isSearchProduct,
+    countCalories,
+    removeCalories,
+    deleteFromFavorites,
+    eatenToday,
+}) => {
     const [isFlipped, setIsFlipped] = useState(false)
 
     const addToFavorites = (id) => {
@@ -56,10 +56,10 @@ const productCard = ({
                         style={{ fontSize: "20px", position: "absolute", right: 10, top: 10 }}
                         onClick={() => countCalories(product, product.id)}
                     />
-                    {calories > 0
+                    {eatenToday.includes(product.id)
                         && <MinusOutlined
                             style={{ fontSize: "20px", position: "absolute", right: 10, top: 40 }}
-                            onClick={() => removeCalories(product)}
+                            onClick={() => removeCalories(product, product.id)}
                         />
                     }
 
