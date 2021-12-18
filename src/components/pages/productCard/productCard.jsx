@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import http from "@utils/http"
 import ReactCardFlip from "react-card-flip"
+import Dialog from "@components/pages/dialog/dialog"
 import { PlusOutlined, MinusOutlined, DeleteOutlined } from "@ant-design/icons"
 
 import "./productCard.sass"
@@ -15,6 +16,20 @@ const productCard = ({
     eatenToday,
 }) => {
     const [isFlipped, setIsFlipped] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+
+    const showModal = () => {
+        setIsModalVisible(true)
+    }
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+        deleteFromFavorites({ "product_id": product.id })
+    }
+
+    const handleCancel = () => {
+        setIsModalVisible(false)
+    }
 
     const addToFavorites = (id) => {
         http.post("/user/products", id)
@@ -25,12 +40,6 @@ const productCard = ({
             .catch(error => {
                 console.log(error.response)
             })
-    }
-
-    const handleClick = (e) => {
-        e.preventDefault()
-        console.log("click")
-        // setIsFlipped(prevState => !prevState.isFlipped)
     }
 
     return (
@@ -51,7 +60,7 @@ const productCard = ({
                         You have successfully added <span className="back-product-name">{product.name}</span> to favorites.
                     </div>
                 </ReactCardFlip>
-                : <div className="product-card front" onClick={handleClick}>
+                : <div className="product-card front">
                     <PlusOutlined
                         style={{ fontSize: "20px", position: "absolute", right: 10, top: 10 }}
                         onClick={() => countCalories(product, product.id)}
@@ -71,7 +80,13 @@ const productCard = ({
                     </div>
                     <DeleteOutlined
                         style={{ fontSize: "20px", position: "absolute", right: 10, bottom: 10 }}
-                        onClick={() => deleteFromFavorites({ "product_id": product.id })}
+                        onClick={showModal}
+                    />
+                    <Dialog 
+                        isModalVisible={isModalVisible} 
+                        handleOk={handleOk}
+                        handleCancel={handleCancel} 
+                        product={product} 
                     />
                 </div>
             }
