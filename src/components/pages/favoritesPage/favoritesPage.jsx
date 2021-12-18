@@ -15,7 +15,7 @@ const favoritesPage = () => {
     const [kilojoules, setKilojoules] = useState(0)
     const [selectedDate, setSelectedDate] = useState("")
     const [message, setMessage] = useState("")
-    const [eatenToday, setEatenToday] = useState(false)
+    const [eatenToday, setEatenToday] = useState([])
     const [eatenProducts, setEatenProducts] = useState(0)
     const [chartData, setChartData] = useState([])
 
@@ -49,7 +49,7 @@ const favoritesPage = () => {
     const countCalories = (favorite, id) => {
         setCalories((prev) => prev + favorite.calories)
         setKilojoules((prev) => prev + favorite.kilojoules)
-        setEatenToday((prev) => !prev)
+        setEatenToday([...eatenToday, id])
         setEatenProducts(prev => prev + 1)
 
     }
@@ -57,7 +57,7 @@ const favoritesPage = () => {
     const removeCalories = (favorite, id) => {
         setCalories((prev) => prev - favorite.calories)
         setKilojoules((prev) => prev - favorite.kilojoules)
-        setEatenToday((prev) => !prev)
+        setEatenToday(eatenToday.filter(item => item !== id));
         setEatenProducts(prev => prev - 1)
     }
 
@@ -133,7 +133,7 @@ const favoritesPage = () => {
                     <div key={favorite.id}>
                         <ProductCard
                             product={favorite}
-                            countCalories={countCalories} calories={calories}
+                            countCalories={countCalories}
                             removeCalories={removeCalories}
                             deleteFromFavorites={deleteFromFavorites}
                             eatenToday={eatenToday}
