@@ -35,7 +35,6 @@ const productCard = ({
         http.post("/user/products", id)
             .then(response => {
                 setIsFlipped(prevState => !prevState.isFlipped)
-                console.log(response)
             })
             .catch(error => {
                 console.log(error.response)

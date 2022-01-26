@@ -17,7 +17,6 @@ const HomePage = () => {
     const getProducts = () => {
         http.get("/products")
             .then(response => {
-                console.log(response.data.data)
                 setAllProducts(response.data.data)
             })
             .catch(error => {

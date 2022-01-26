@@ -19,7 +19,6 @@ const SignIn = () => {
             .then(response => {
                 history.push("/home")
                 window.location.reload()
-                console.log(response.data.data.access_token)
                 window.localStorage.setItem("user-email", email)
                 window.localStorage.setItem("access_token", response.data.data.access_token)
                 window.localStorage.setItem("access_token_exp", response.data.data.access_token_exp)

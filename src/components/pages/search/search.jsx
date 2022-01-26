@@ -16,7 +16,6 @@ const search = () => {
             query: value,
         })
             .then(response => {
-                console.log(response)
                 setSearchResults(response.data.data)
                 !response.data.data.length && setNoResult(true)
             })
