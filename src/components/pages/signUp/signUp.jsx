@@ -19,7 +19,6 @@ const SignUp = () => {
         http.post("/auth/signup/", { "email": email, "password": password })
             .then(response => {
                 response.status === 201 && setMessage(response.data.message)
-                console.log(response)
             })
             .catch(error => {
                 console.log(error.response.data.message)

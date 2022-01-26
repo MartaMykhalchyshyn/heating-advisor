@@ -27,7 +27,6 @@ const favoritesPage = () => {
     const getFavorites = () => {
         http.get("/user/products")
             .then(response => {
-                console.log(response.data.data.products)
                 setFavorites(response.data.data.products)
             })
             .catch(error => {
@@ -38,7 +37,6 @@ const favoritesPage = () => {
     const deleteFromFavorites = (id) => {
         http.delete("/user/products", id)
             .then(response => {
-                console.log(response)
                 getFavorites()
             })
             .catch(error => {
@@ -68,7 +66,6 @@ const favoritesPage = () => {
     const postDailyCalories = (data) => {
         http.post("/user/calories", data)
             .then(response => {
-                console.log(response)
                 setMessage(response.data.message)
             })
             .catch(error => {
@@ -79,7 +76,6 @@ const favoritesPage = () => {
     const getDailyCalories = () => {
         http.get("/user/calories")
             .then(response => {
-                console.log(response)
                 setChartData(response.data.data.calories)
             })
             .catch(error => {
