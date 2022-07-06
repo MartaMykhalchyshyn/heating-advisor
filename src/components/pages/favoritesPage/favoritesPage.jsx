@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import ProductCard from "@components/pages/productCard/productCard"
-import Header from "@components/pages/header/header"
-import Chart from "@components/pages/chart/chart"
+import ProductCard from "@components/productCard"
+import Header from "@components/header"
+import Chart from "@components/chart"
 import { Badge } from "antd"
 import http from "@utils/http"
 import { DatePicker, Button } from "antd"
@@ -36,7 +36,7 @@ const favoritesPage = () => {
 
     const deleteFromFavorites = (id) => {
         http.delete("/user/products", id)
-            .then(response => {
+            .then(() => {
                 getFavorites()
             })
             .catch(error => {
@@ -55,7 +55,7 @@ const favoritesPage = () => {
     const removeCalories = (favorite, id) => {
         setCalories((prev) => prev - favorite.calories)
         setKilojoules((prev) => prev - favorite.kilojoules)
-        setEatenToday(eatenToday.filter(item => item !== id));
+        setEatenToday(eatenToday.filter(item => item !== id))
         setEatenProducts(prev => prev - 1)
     }
 

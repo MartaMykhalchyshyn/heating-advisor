@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import ProductCard from "@components/pages/productCard/productCard"
-import Header from "@components/pages/header/header"
-import Search from "@components/pages/search/search"
+import ProductCard from "@components/productCard"
+import Header from "@components/header"
+import Search from "@components/search"
 import http from "@utils/http"
 
 import "./homePage.sass"

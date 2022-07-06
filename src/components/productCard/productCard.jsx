@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import http from "@utils/http"
 import ReactCardFlip from "react-card-flip"
-import Dialog from "@components/pages/dialog/dialog"
+import Dialog from "@components/dialog"
 import { PlusOutlined, MinusOutlined, DeleteOutlined } from "@ant-design/icons"
 
 import "./productCard.sass"
@@ -23,7 +23,7 @@ const productCard = ({
     }
 
     const handleOk = () => {
-        setIsModalVisible(false);
+        setIsModalVisible(false)
         deleteFromFavorites({ "product_id": product.id })
     }
 
@@ -33,7 +33,7 @@ const productCard = ({
 
     const addToFavorites = (id) => {
         http.post("/user/products", id)
-            .then(response => {
+            .then(() => {
                 setIsFlipped(prevState => !prevState.isFlipped)
             })
             .catch(error => {
@@ -81,11 +81,11 @@ const productCard = ({
                         style={{ fontSize: "20px", position: "absolute", right: 10, bottom: 10 }}
                         onClick={showModal}
                     />
-                    <Dialog 
-                        isModalVisible={isModalVisible} 
+                    <Dialog
+                        isModalVisible={isModalVisible}
                         handleOk={handleOk}
-                        handleCancel={handleCancel} 
-                        product={product} 
+                        handleCancel={handleCancel}
+                        product={product}
                     />
                 </div>
             }

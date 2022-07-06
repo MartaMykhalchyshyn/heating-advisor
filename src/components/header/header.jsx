@@ -1,7 +1,7 @@
 import React from "react"
 import { Popover, Avatar } from "antd"
 import { UserOutlined } from "@ant-design/icons"
-import Navigation from "@components/pages/navigation/navigation"
+import Navigation from "@components/navigation"
 
 import "./header.sass"
 

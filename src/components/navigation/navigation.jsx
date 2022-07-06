@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import "./navigation.sass"
 
 
-const navigation = () => {
+const Navigation = () => {
 
     return (
         <div className="navigation">
@@ -13,4 +13,4 @@ const navigation = () => {
     )
 }
 
-export default navigation
+export default Navigation
