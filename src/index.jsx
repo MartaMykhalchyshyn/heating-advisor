@@ -2,10 +2,10 @@ import ReactDOM from "react-dom"
 import React from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
-import SignIn from "./components/pages/signIn/signIn.jsx"
-import SignUp from "./components/pages/signUp/signUp.jsx"
-import HomePage from "./components/pages/homePage/homePage.jsx"
-import FavoritesPage from "./components/pages/favoritesPage/favoritesPage.jsx"
+import SignIn from "./components/pages/signIn"
+import SignUp from "./components/pages/signUp"
+import HomePage from "./components/pages/homePage"
+import FavoritesPage from "./components/pages/favoritesPage"
 
 import "./index.sass"
 

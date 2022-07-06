@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { DebounceInput } from "react-debounce-input"
-import ProductCard from "@components/pages/productCard/productCard"
+import ProductCard from "@components/productCard"
 import http from "@utils/http"
 
 import "./search.sass"
