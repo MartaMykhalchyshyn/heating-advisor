@@ -7,7 +7,7 @@ script:
 
 deploy:
   provider: heroku
-  app: calories-tracker
+  app: heating-advisor
   api_key: $HEROKU_TOKEN
   on:
     branch: master

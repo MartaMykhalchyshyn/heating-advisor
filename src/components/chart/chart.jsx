@@ -1,32 +1,44 @@
-import React from "react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"
-import "./chart.sass"
+import React from "react";
 
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 
-const Chart = ({ chartData }) => {
+const Chart = ({ chartData, weekly }) => {
+  const minChartTemp = Math.min(
+    ...chartData.map((item) => item["Forecast temperature"])
+  );
+  const maxChartTemp = Math.max(
+    ...chartData.map((item) => item["Forecast temperature"])
+  );
 
-    const fixedChartData = chartData.map(({ date: name, ...rest }) => ({ name, ...rest }))
+  return (
+    <LineChart width={weekly ? 1000 : 500} height={500} data={chartData}>
+      <CartesianGrid strokeDasharray="4 4" />
+      <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
+      <YAxis
+        domain={[
+          minChartTemp < 8 ? minChartTemp : 7,
+          maxChartTemp > 8 ? maxChartTemp : 9,
+        ]}
+      />
+      <Tooltip />
+      <Legend />
+      <Line
+        type="monotone"
+        dataKey="Limit temperature"
+        stroke="#FF5733"
+        activeDot={{ r: 4 }}
+      />
+      <Line type="monotone" dataKey="Forecast temperature" stroke="#82ca9d" />
+    </LineChart>
+  );
+};
 
-    return (
-        <LineChart
-            width={500}
-            height={300}
-            data={fixedChartData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-            {chartData.length && (
-                <>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="calories" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="kilojoules" stroke="#82ca9d" />
-                </>
-            )}
-        </LineChart>
-    )
-}
-
-export default Chart
+export default Chart;

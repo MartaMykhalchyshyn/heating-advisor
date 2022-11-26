@@ -1,50 +1,37 @@
-import React, { useState } from "react"
-import { DebounceInput } from "react-debounce-input"
-import ProductCard from "@components/productCard"
-import http from "@utils/http"
+import React, { useState, useEffect } from "react";
 
-import "./search.sass"
+import { DebounceInput } from "react-debounce-input";
 
+import "./search.sass";
 
-const search = () => {
-    const [searchValue, setSearchValue] = useState("")
-    const [searchResults, setSearchResults] = useState([])
-    const [noResult, setNoResult] = useState(false)
+const search = ({ setCityName, selectedCityId }) => {
+  const [inputValue, setInputValue] = useState("");
 
-    const makeSearch = (value) => {
-        http.get("/products", {
-            query: value,
-        })
-            .then(response => {
-                setSearchResults(response.data.data)
-                !response.data.data.length && setNoResult(true)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
+  useEffect(() => {
+    selectedCityId && setInputValue("");
+  }, [selectedCityId]);
 
-    return (
-        <div className="search" >
-            <div>
-                <DebounceInput
-                    minLength={3}
-                    debounceTimeout={300}
-                    onChange={(e) => makeSearch(e.target.value)}
-                    onKeyDown={(e) => setSearchValue(e.target.value)}
-                    value={searchValue}
-                    placeholder="Enter a product name"
-                    className="search-input"
-                />
-                {noResult && <div className="search-message">There is no result for your search</div>}
-            </div>
-            <div className="search-result">
-                {searchValue && searchResults.map(product => (
-                    <ProductCard key={product.id} product={product} isSearchProduct />
-                ))}
-            </div>
-        </div>
-    )
-}
+  const onChangeHandler = (event) => {
+    setInputValue(event.target.value);
+    setCityName(event.target.value);
+  };
 
-export default search
+  return (
+    <div className="search">
+      <div>
+        <DebounceInput
+          type="text"
+          className="search-input"
+          minLength={3}
+          debounceTimeout={300}
+          onChange={onChangeHandler}
+          onKeyDown={(e) => setInputValue(e.target.value)}
+          placeholder="Enter city name"
+          value={inputValue}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default search;
