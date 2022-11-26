@@ -2,6 +2,9 @@
   "name": "heating-advisor",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "14.18.0"
+  },
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
