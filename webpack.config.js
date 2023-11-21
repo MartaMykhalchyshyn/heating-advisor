@@ -38,10 +38,11 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: "./dist",
-    port: 3000,
+    static: {
+      directory: path.join(__dirname, "./dist"),
+    },
+    port: 4000,
     hot: true,
-    watchContentBase: true,
     historyApiFallback: true,
   },
   resolve: {
