@@ -30,7 +30,7 @@ const CustomizedSnackbars = ({
         setAlertType("warning");
         setOpen(true);
       }
-      if (cityWeather?.main.temp > 8 || currentMaxTemperature > 8) {
+      if (cityWeather?.main.temp >= limitTemperature || currentMaxTemperature >= limitTemperature) {
         setAlertMessage(
           `Warning! Temperature is going to be above ${limitTemperature}°! Prepare to turn off heating!`
         );
