@@ -76,7 +76,7 @@ const HomePage = () => {
 
   const getUserData = (username) => {
     axios
-      .get(`http://localhost:3000/userData/${username}`)
+      .get(`https://course-work-beta.vercel.app/userData/${username}`)
       .then((response) => {
         console.log("responseresponseresponseresponseresponse", response);
         setUserFavoriteCities(response.data.favoriteCities);
@@ -125,7 +125,7 @@ const HomePage = () => {
   const removeCity = (selectedCityId) => {
     const username = sessionStorage.getItem("username");
     axios
-      .delete("http://localhost:3000/removeCity", {
+      .delete("https://course-work-beta.vercel.app/removeCity", {
         data: { username, selectedCityId },
       })
       .then(() => {
@@ -139,7 +139,7 @@ const HomePage = () => {
   const addCity = (cityName) => {
     const username = sessionStorage.getItem("username");
     axios
-      .post("http://localhost:3000/addCity", { username, cityName })
+      .post("https://course-work-beta.vercel.app/addCity", { username, cityName })
       .then(() => {
         getUserData(username);
       })

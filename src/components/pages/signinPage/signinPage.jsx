@@ -31,7 +31,7 @@ const SigninPage = () => {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:3000/login", { username, password })
+      .post("https://course-work-beta.vercel.app/login", { username, password })
       .then(() => {
         sessionStorage.setItem("username", username);
         history.replace("/home");

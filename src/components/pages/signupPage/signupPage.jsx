@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Button from "@mui/material/Button";
@@ -51,7 +51,7 @@ const SignupPage = () => {
 
   const handleRegistration = () => {
     axios
-      .post("http://localhost:3000/register", {
+      .post("https://course-work-beta.vercel.app/register", {
         username,
         password,
         favoriteCities: defaultCities,
@@ -164,27 +164,6 @@ const SignupPage = () => {
         </Link>
       </div>
     </div>
-
-    // <div className="signup-page">
-    //   <div>
-    //     <h2>Реєстрація</h2>
-    //     <input
-    //       type="text"
-    //       name="username"
-    //       placeholder="Ім'я користувача"
-    //       value={username}
-    //       onChange={handleInputChange}
-    //     />
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       placeholder="Пароль"
-    //       value={password}
-    //       onChange={handleInputChange}
-    //     />
-    //     <button onClick={handleRegistration}>Зареєструватися</button>
-    //   </div>
-    // </div>
   );
 };
 

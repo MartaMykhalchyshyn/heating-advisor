@@ -34,9 +34,9 @@ const Header = ({
   const id = open ? "simple-popover" : undefined;
 
   useEffect(() => {
-    const selectedCityIndex =
-      favoriteCities &&
-      favoriteCities.findIndex((city) => city.cityName === cityName);
+    const selectedCityIndex
+      = favoriteCities
+      && favoriteCities.findIndex((city) => city.cityName === cityName);
     console.log("favoriteCities", favoriteCities, cityName);
     console.log("selectedCityIndex", selectedCityIndex);
     selectedCityIndex > -1
@@ -57,7 +57,7 @@ const Header = ({
   const handleLimit = () => {
     const username = sessionStorage.getItem("username");
     axios
-      .patch("http://localhost:3000/updateLimitTemperature", {
+      .patch("https://course-work-beta.vercel.app/updateLimitTemperature", {
         username,
         limitTemperature: userLimit,
       })
@@ -73,8 +73,8 @@ const Header = ({
   return (
     <div className="header" onClick={clearSearch}>
       <div className="header-cities">
-        {favoriteCities &&
-          favoriteCities.map(({ cityName, id }) => (
+        {favoriteCities
+          && favoriteCities.map(({ cityName, id }) => (
             <div key={id}>
               <button
                 style={{
