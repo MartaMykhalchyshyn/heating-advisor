@@ -10,6 +10,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const CustomizedSnackbars = ({
   cityWeather,
+  limitTemperature,
   currentMinTemperature,
   currentMaxTemperature,
 }) => {
@@ -18,19 +19,20 @@ const CustomizedSnackbars = ({
   const [alertType, setAlertType] = useState(null);
 
   useEffect(() => {
-    console.log("currentMinTemperature", currentMinTemperature);
-
     if (cityWeather && cityWeather.cod === 200) {
-      if (cityWeather?.main.temp < 8 || currentMinTemperature < 8) {
+      if (
+        cityWeather?.main.temp < limitTemperature
+        || currentMinTemperature < limitTemperature
+      ) {
         setAlertMessage(
-          "Warning! Temperature is going to be below 8°! Prepare to turn on heating!"
+          `Warning! Temperature is going to be below ${limitTemperature}°! Prepare to turn on heating!`
         );
         setAlertType("warning");
         setOpen(true);
       }
       if (cityWeather?.main.temp > 8 || currentMaxTemperature > 8) {
         setAlertMessage(
-          "Warning! Temperature is going to be above 8°! Prepare to turn off heating!"
+          `Warning! Temperature is going to be above ${limitTemperature}°! Prepare to turn off heating!`
         );
         setAlertType("success");
         setOpen(true);

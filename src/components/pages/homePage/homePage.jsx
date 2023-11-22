@@ -26,34 +26,27 @@ const HomePage = () => {
   const [errorMessage, setErrorMessage] = useState("no data provided");
   const [selectedCityId, setSelectedCityId] = useState(0);
 
-  const [userFavoriteCities, setUserFavoriteCities] = useState([
-    {
-      id: 0,
-      cityName: "Lviv",
-    },
-    {
-      id: 1,
-      cityName: "Kyiv",
-    },
-    {
-      id: 2,
-      cityName: "Kharkiv",
-    },
-    {
-      id: 3,
-      cityName: "Kherson",
-    },
-  ]);
+  const [userFavoriteCities, setUserFavoriteCities] = useState([]);
   const [limitTemperature, setlimitTemperature] = useState(8);
 
-  const isCitySaved = userFavoriteCities.some(
-    (item) => item.cityName === cityName
-  );
+  const [isCitySaved, setIsCitySaved] = useState(true);
 
   useEffect(() => {
     const username = sessionStorage.getItem("username");
     getUserData(username);
   }, []);
+
+  const checkCityExists = (city) => {
+    return userFavoriteCities.some((item) => item.cityName === city);
+  };
+
+  useEffect(() => {
+    if (checkCityExists(cityName)) {
+      setIsCitySaved(true);
+    } else {
+      setIsCitySaved(false);
+    }
+  }, [userFavoriteCities, cityName]);
 
   useEffect(() => {
     getCurrentCityWeather(cityName);
@@ -78,7 +71,6 @@ const HomePage = () => {
     axios
       .get(`https://course-work-beta.vercel.app/userData/${username}`)
       .then((response) => {
-        console.log("responseresponseresponseresponseresponse", response);
         setUserFavoriteCities(response.data.favoriteCities);
         setlimitTemperature(response.data.limitTemperature);
       })
@@ -122,11 +114,11 @@ const HomePage = () => {
       });
   };
 
-  const removeCity = (selectedCityId) => {
+  const removeCity = (cityName) => {
     const username = sessionStorage.getItem("username");
     axios
       .delete("https://course-work-beta.vercel.app/removeCity", {
-        data: { username, selectedCityId },
+        data: { username, cityName },
       })
       .then(() => {
         getUserData(username);
@@ -153,21 +145,18 @@ const HomePage = () => {
       <Header
         setCityName={setCityName}
         cityName={cityName}
-        selectedCityId={selectedCityId}
         setSelectedCityId={setSelectedCityId}
         favoriteCities={userFavoriteCities}
+        setlimitTemperature={setlimitTemperature}
       />
       <Search setCityName={setCityName} selectedCityId={selectedCityId} />
 
       <div className="city-weather">
         {!errorMessage && cityWeather?.name ? (
           <>
-            <CityCard
-              cityWeather={cityWeather}
-              selectedCityId={selectedCityId}
-            />
+            <CityCard cityWeather={cityWeather} />
             {isCitySaved ? (
-              <BookmarkAddedIcon onClick={() => removeCity(selectedCityId)} />
+              <BookmarkAddedIcon onClick={() => removeCity(cityName)} />
             ) : (
               <BookmarkAddIcon onClick={() => addCity(cityName)} />
             )}
@@ -189,6 +178,7 @@ const HomePage = () => {
 
       <Alert
         cityWeather={cityWeather}
+        limitTemperature={limitTemperature}
         currentMinTemperature={currentMinTemperature}
         currentMaxTemperature={currentMaxTemperature}
       />

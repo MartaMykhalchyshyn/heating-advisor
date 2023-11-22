@@ -38,7 +38,7 @@ const SigninPage = () => {
       })
       .catch((error) => {
         console.error("Помилка входу:", error);
-        setMessage(error.message); // TODO: Check if its works, check styles
+        setMessage(error.message);
       });
   };
   return (

@@ -8,7 +8,6 @@ import helpers from "@utils/helpers";
 import "./cityCard.sass";
 
 const CityCard = ({ cityWeather }) => {
-  console.log("cityWeather", cityWeather);
   return (
     <div className="city-card">
       {cityWeather.name && (
@@ -17,9 +16,6 @@ const CityCard = ({ cityWeather }) => {
             <h1>
               {cityWeather.name}, {cityWeather.sys.country}
             </h1>
-            {/* {selectedCityId ? (
-              <button onClick={() => removeCity(selectedCityId)}>Delete</button>
-            ) : null } */}
             <div className="city-card-main-details">
               <h1>{`${cityWeather.main.temp.toFixed()}°`}</h1>
               <img src={helpers.getIcon(cityWeather.weather[0].icon)} />

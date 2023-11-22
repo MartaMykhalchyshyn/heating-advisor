@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import Button from "@mui/material/Button";
@@ -23,6 +23,7 @@ const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const isValid = password !== repeatedPassword;
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const history = useHistory();
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -57,11 +58,11 @@ const SignupPage = () => {
         favoriteCities: defaultCities,
         limitTemperature: defaultLimitTemperature,
       })
-      .then((response) => {
-        console.log(response.data.message);
+      .then(() => {
+        history.replace("/");
       })
       .catch((error) => {
-        setMessage(error.message); // TODO: Check if its works, check styles
+        setMessage(error.message);
         console.error("Помилка реєстрації:", error);
       });
   };

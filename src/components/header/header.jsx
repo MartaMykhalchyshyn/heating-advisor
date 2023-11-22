@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
@@ -14,10 +14,10 @@ import "./header.sass";
 const Header = ({
   setCityName,
   cityName,
-  selectedCityId,
   setSelectedCityId,
   clearSearch,
   favoriteCities,
+  setlimitTemperature,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [userLimit, setUserLimit] = useState(null);
@@ -32,17 +32,6 @@ const Header = ({
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
-  useEffect(() => {
-    const selectedCityIndex
-      = favoriteCities
-      && favoriteCities.findIndex((city) => city.cityName === cityName);
-    console.log("favoriteCities", favoriteCities, cityName);
-    console.log("selectedCityIndex", selectedCityIndex);
-    selectedCityIndex > -1
-      ? setSelectedCityId(selectedCityIndex)
-      : setSelectedCityId(null);
-  }, [cityName, favoriteCities]);
 
   const changeSavedCity = (cityName, cityId) => {
     setSelectedCityId(cityId);
@@ -62,8 +51,8 @@ const Header = ({
         limitTemperature: userLimit,
       })
       .then(() => {
-        getUserData(username);
-        setUserLimit("");
+        setlimitTemperature(userLimit);
+        setAnchorEl(null);
       })
       .catch((error) => {
         console.error("Помилка зміни порогу температури:", error);
@@ -74,16 +63,16 @@ const Header = ({
     <div className="header" onClick={clearSearch}>
       <div className="header-cities">
         {favoriteCities
-          && favoriteCities.map(({ cityName, id }) => (
-            <div key={id}>
+          && favoriteCities.map((item) => (
+            <div key={item.id}>
               <button
                 style={{
-                  color: selectedCityId === id ? "#3a86ff" : "",
+                  color: cityName === item.cityName ? "#3a86ff" : "",
                 }}
                 className="header-city"
-                onClick={() => changeSavedCity(cityName, id)}
+                onClick={() => changeSavedCity(item.cityName, item.id)}
               >
-                {cityName}
+                {item.cityName}
               </button>
             </div>
           ))}
@@ -106,6 +95,9 @@ const Header = ({
           }}
         >
           <div className="header-popover">
+            <Typography sx={{ p: 2 }}>
+              {sessionStorage.getItem("username")}
+            </Typography>
             <FormControl variant="outlined">
               <InputLabel htmlFor="outlined-adornment-limit">Limit</InputLabel>
               <OutlinedInput
